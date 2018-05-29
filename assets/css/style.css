@@ -287,7 +287,7 @@ textarea.form-control {
 .modal-header {background-color: #ddd;}
 .modal-body {background-color: #eee;}
 .modal-footer {background-color: #ddd;}
-
+.modal-backdrop.in { z-index: auto;}
 .btn {
 	font-family: Raleway, sans-serif;
 	/*text-transform: uppercase;*/
