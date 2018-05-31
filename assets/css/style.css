@@ -127,12 +127,12 @@ a:visited {
 
 a:hover {
 	text-decoration: none;
-	color: #444;
+	color: #FF6600; /*#444;*/
 }
 
 a:active {
 	text-decoration: none;
-	color: #888;
+	color: #FF6600; /*#888;*/
 }
 
 
@@ -284,10 +284,20 @@ textarea.form-control {
 /* ---------------------------------------------- /*
 .modal-backdrop {background-color: #aa8;}
 /* ---------------------------------------------- */
+
 .modal-header {background-color: #ddd;}
-.modal-body {background-color: #eee;}
+.modal-body {
+	font-family: Garamond, sans-serif;
+	font-size: 16px;
+	background-color: #eee;
+	color: #000000;
+}
 .modal-footer {background-color: #ddd;}
 .modal-backdrop.in { z-index: auto;}
+.modal {
+   top: 50px;
+   z-index: auto;
+}
 .btn {
 	font-family: Raleway, sans-serif;
 	/*text-transform: uppercase;*/
@@ -356,6 +366,9 @@ textarea.form-control {
 }
 .pfblock-lightgray {
 	background: #eee;
+}
+.pfblock-white {
+	background: #fff;
 }
 
 .pfblock-image {
