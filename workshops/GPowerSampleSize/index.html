@@ -1322,11 +1322,7 @@ playing around with parameters
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li><p>[1] .5 to .7115 = .2115, bigger effect size compensate for loss of sample size (sensitivity)</p></li>
-<li><p>[2] critical value 1.9990 with errors approx. .05 and .2 (compromise)</p></li>
-<li><p>[3] critical value 1.6994 with errors approx. double, .09 and .38</p></li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -1374,18 +1370,7 @@ an ECD example
 <li>question: what sample size &rarr; so, what now ?</li>
 </ul>
 
-<ul class = "build incremental">
-<li><code>t-test independent means</code></li>
-<li><code>one-tailed</code></li>
-<li><code>type I error alpha .05</code></li>
-<li><code>type II error beta .2, for power .8</code></li>
-<li><code>effect size (Cohen&#39;s d)</code>
-
-<ul>
-<li><code>mean and pop. standard deviation for first group: .5% (1%)</code></li>
-<li><code>mean and pop. standard deviation for second group: 1% (.25%)</code></li>
-<li><code>resulting effect size 2.63 (big !!)</code></li>
-</ul></li>
+</li>
 <li><code>sample size 6 (3 each group)</code></li>
 </ul>
 
@@ -1571,12 +1556,7 @@ KURT: strange, why -.75 requires more observations than .5 ?
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li>[1] \(\Delta\) looks same because \(\sqrt{2*(1-\rho)}\), but ncp bigger, n much smaller (1 group)</li>
-<li>[2] -posthoc- for 64 subjects 2 measurements, ncp &gt; 4 and power &gt; .975</li>
-<li>[3] approx. independent means, here 65 but different effect size (dz)</li>
-<li>[4] double the effect size, almost 4 times smaller sample size (here 10 and 34)</li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -1605,11 +1585,7 @@ KURT: why non-parametric - data or theory ?
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li><p>[1] a few more observations (3 more per group), less than 5 % loss (ARE)</p></li>
-<li><p>[2] several more observations, less efficient, more than 13 % loss (min ARE)</p></li>
-<li><p>maybe just ignore it and add 10 % observations ?!</p></li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -1707,11 +1683,7 @@ comparing all groups jointly, to see if at least one differs
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li><p>[1] different effect size (f), distribution (ncp,critical-F), same sample size (size ~ imbalance)</p></li>
-<li><p>[2] n=63, with ncp 10.5 [3] effect size increases, difference with either 0 or 4!</p></li>
-<li><p>[4] same effect size, so, same sample size, 63, ncp 10.5 (1/7th explained)</p></li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -1746,11 +1718,7 @@ comparing all pairwise combinations
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li><p>[1] divide \(\alpha\) by 3 (86*2) &rarr; overall 86*3 = 258</p></li>
-<li><p>[2] or divide by 2 (78*2) (biggest difference implied) &rarr; overall 78*3 = 234</p></li>
-<li><p>[3] .6562 when /3 or .7118 when /2, power-loss</p></li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -1852,11 +1820,7 @@ calculating the sample sizes
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li><p>[1] total sample size 128 (again!!), 64 C and 64 T1, or 34 = 17 C and 17 T2</p></li>
-<li><p>[2] same with Bonferoni correction &rarr; 156 and 42; 78 C, 78 T1, 21 T2</p></li>
-<li><p>[3] total sample size 81 &rarr; 27 in each group</p></li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -1885,11 +1849,7 @@ slope testing, is it 0 ?
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li><p>[1] 128, same as for reference example, now with f\(^2\) = .25\(^2\).</p></li>
-<li><p>[2] sample size decreases with \(\sigma_x\) (opposite \(\sigma_y\) ~ effect size), for same slope</p></li>
-<li><p>[3] loss of degree of freedom, very little impact</p></li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -1913,12 +1873,7 @@ comparison of correlations
 <li>[3] assume .1 and .3844 effect size &amp; sample size ?</li>
 </ul>
 
-<ul class = "build incremental">
-<li><p>[1] effect size q = 0.5074, sample size 64*2 = 128</p></li>
-<li><p>[2] effect size q = 1.5556, sample size 10*2 = 20, same difference, bigger effect</p></li>
-<li><p>[3] effect size q = -0.3048, sample size 172*2 = 344, negative and smaller effect</p></li>
-<li><p>note that dependent correlations are more difficult, see manual</p></li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -1947,10 +1902,7 @@ proportion of discordant and odds ratio
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li>[1] odds ratio 2 * (.6/.4) = 3 (odds), 3/3+1 = .75</li>
-<li>[2] total sample size 328, [3] total sample size 164, either at .05 or .95</li>
-</ul>
+
 
 <ul>
 <li><p>treat as if unbounded, ok within .2 - .8, variance is p*(1-p) &rarr; maximally .25 !!</p>
@@ -1960,9 +1912,7 @@ proportion of discordant and odds ratio
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li>[4] effect size .3, sample size 352 (&gt; 328)</li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -1998,10 +1948,7 @@ proportion of discordant and odds ratio
 
 </div>
 <div style='float:left;'>
-  <ul class = "build incremental">
-<li><p>[1] power for proportion compared to reference .6, sample size determines impact</p></li>
-<li><p>[2] one-tailed, increases power, both sides (absolute value difference) <br>tail to choose on the correct side</p></li>
-</ul>
+  
 
 </div>
   </article>
@@ -2036,11 +1983,7 @@ proportion of discordant and odds ratio
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li><p>[1] total sample size 288 &amp; [2] 144 &amp; [3] impossible, but limits to 72</p></li>
-<li><p>[4] for proportion discordant, 1 to 4 or 4 to 1</p></li>
-<li><p>[5] sample size differs because side effects</p></li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -2098,11 +2041,7 @@ repeated measures within
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li>number of groups = 1, number of measurements = 2, sample size = [1] 65 and [2] 34</li>
-<li>[3] changed degrees of freedom (each group a set of measurements), thus F</li>
-<li>[4] impact bigger when correlation</li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -2127,11 +2066,7 @@ repeated measures between
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li>[1] sample size higher when higher correlation</li>
-<li>[2] sample size lower when more measurements (unless perfect correlation)</li>
-<li>[3] more groups require higher sample size</li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
@@ -2158,11 +2093,7 @@ repeated measures between
 </ul></li>
 </ul>
 
-<ul class = "build incremental">
-<li>[1] same with indep and [2] same with dependent</li>
-<li>[3] more groups, higher sample size (identical to within)</li>
-<li>[4] difference between within and between</li>
-</ul>
+
 
   </article>
   <!-- Presenter Notes -->
