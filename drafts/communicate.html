@@ -194,8 +194,8 @@ how to communicate methodology</p></h1>
 <style type="text/css">
 
 body{ /* Normal  */
-      font-size: 12px;
-      bgcolor:"#FF6600";
+      font-size: 14px;
+      background-color:"#FF6600";
   }
 td {  /* Table  */
   font-size: 8px;
@@ -266,7 +266,7 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 </ul>
 <p>The aim you specify has consequences for how you need to justify the study, what the implications and requirements are.</p>
 <p>Maybe consider the following rough distinction in types of research that may help bring focus in your arguments. The types of design, for example experimental, observational, … will be discussed in a later section.</p>
-<p>Research could be</p>
+<p>The purpose of the research could be</p>
 <ul>
 <li>CONFIRMATORY
 <ul>
@@ -308,7 +308,7 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 </ul></li>
 <li>requirement: minimal cost to get rough idea (eg., 3 mice per condition)</li>
 </ul></li>
-<li>TECHNICAL - TECHNOLOGICAL
+<li>TECHNICAL - TECHNOLOGICAL advancement
 <ul>
 <li>reason: to design, engineer, create, …</li>
 <li>justification based on expected contribution versus costs, not statistics
@@ -369,7 +369,7 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 </div>
 <div id="number-of-observations-quantity-of-information" class="section level3">
 <h3>Number of Observations: Quantity of Information</h3>
-<p>Observations provide information that is used to test (significance), estimate (confidence interval) or predict (cross validation). Observations typically involve a cost (money, time, ethical concerns, …), so plan your observations accordingly.</p>
+<p>Observations provide information that is used to test (significance), estimate (confidence interval), predict (cross validation) and understand (qualitative). Observations typically involve a cost (money, time, ethical concerns, …), so plan your observations accordingly.</p>
 <p>Sample sizes are determined depending on the type of research (see above)</p>
 <ul>
 <li>calculate how many observations are required to succesfully conclude the study (significance / high enough accuracy)</li>
@@ -394,6 +394,24 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 </div>
 <div id="conditions-of-observation-quality-of-information" class="section level3">
 <h3>Conditions of Observation: Quality of Information</h3>
+<p>Different types of research have different consequences on the quality of the collected information and its processing.</p>
+<ul>
+<li>QUANTITATIVE
+<ul>
+<li>main question is ‘how’</li>
+<li>focus on population, aim at generalization</li>
+<li>uses (ideally) representative samples</li>
+<li>can be descriptive and/or inferential</li>
+</ul></li>
+<li>QUALITATIVE (holistic/subjective)
+<ul>
+<li>main question is ‘why’</li>
+<li>focus on understanding of object of research: reasons, opinions, motivations, …</li>
+<li>typically explorative / hypothesis generating</li>
+</ul></li>
+</ul>
+<p>note: there is a continuum between the two note: mixed methods formally uses both, can be used consecutively as well</p>
+<p>For quantitive research:</p>
 <p>The informational value of observations is dependent on the conditions under which they are observed, this is the design of the study.</p>
 <p>A general principle is to</p>
 <ul>
@@ -435,10 +453,24 @@ a sample of elderly patients that you know personally does not strictly allow fo
 </div>
 <div id="statistical-analyses-plan" class="section level3">
 <h3>Statistical Analyses Plan</h3>
-<p>In addition to the design, typically proposals require a statistical plan. The statistical plan allows you to show how you use statistics in agreement with the design to get an answer to those research questions that are vital for your study. Specify the statistical tools of interest as well as how the resulting statistics are used for inference. Is it a p-value, a confidence interval, the probability of succesful prediction, … that is of interest, and how does it answer your questions ?</p>
-<p>Reflect on likely challenges and how to deal with them for the analysis of main importance. For example, previous research may have shown that there are deviations from normality that you believe can be dealt with using a log transformation, or group specific variances that you believe should be dealt with using a mixed model.</p>
-<p>Best practice is to create the data you expect during the design phase -before you have your data- and to verify whether your analysis would be able to extract the required information. This does require some programming and may be a bit hard to do. Alternatively, at least give the final datafile some serious thought and build the framework by specifying rows and columns. Do not simply wait with thinking about the analysis untill after the data have been collected. Note that even the most complex and advanced statistics would not make up for a poor design!</p>
-<p>Do not state that you will be working with SPSS, R -and- Prism without any specific reason to use multiple tools, and think very carefuly about that reason. Using different tools without good reason simply communicates that you do not know how to perform the analyses. When possible, simply use the tool that allows you to do all your statistics.</p>
+<p>Introduce the statistics that are planned</p>
+<ul>
+<li>in agreement with design</li>
+<li>able to answer the research questions vital for your study</li>
+</ul>
+<p>Is it a p-value, a confidence interval, the probability of succesful prediction, … that is of interest, and how does it answer your questions ?</p>
+<p>Reflect on likely challenges and how to deal with them for the analysis of main importance, for example deviations from normality dealt with using log-transformations.</p>
+<p>Best practice</p>
+<ul>
+<li>create the data you expect during the design phase -before you have your data-</li>
+<li>verify whether your analysis would be able to extract the required information.</li>
+</ul>
+<p>At least</p>
+<ul>
+<li>give the final datafile as expected some serious thought and build the framework by specifying rows and columns before data is collected.</li>
+</ul>
+<p>Note: even the most complex and advanced statistics would not make up for a poor design!</p>
+<p>Note: do not state that you will be working with SPSS, R -and- Prism without any specific reason to use multiple tools, and think very carefuly about that reason. Using different tools without good reason simply communicates that you do not know how to perform the analyses.</p>
 </div>
 </div>
 </div>
