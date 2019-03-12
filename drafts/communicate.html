@@ -248,14 +248,14 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 -->
 <div id="research-proposal-methodology-and-statistics" class="section level1">
 <h1>Research Proposal: Methodology and Statistics</h1>
-<p>Convince your committee that your study is appropriately designed so that it can be succesful, effective and efficient. Keep in mind that not everyone in your committee is expert in your research domain, some are statisticians.</p>
+<p>Convince your committee that your study is appropriately designed so that it can be successful, effective and efficient. Keep in mind that not everyone in your committee is expert in your research domain, some are statisticians.</p>
 <p>So you have to make clear</p>
 <ul>
 <li>what is the aim of your study</li>
 <li>how is your study designed to achieve that aim</li>
 </ul>
 <p>This draft, based on shared experience in statistical consulting, highlights some issues and remains work in progress. Please share your suggestions for modifications and additions with ICDS (<a href="mailto:wilfried.cools@vub.be">wilfried.cools@vub.be</a>).</p>
-<p>Consult the do’s and donts page to avoid common misunderstandings.</p>
+<p>Disclaimer: Current draft describes work in progress and its content should be treated as such. All provided information should be used as guidance but the researcher remains responsible for the actual choices and their communication.</p>
 <!-- RESEARCH QUESTION -->
 <div id="research-aim" class="section level2">
 <h2>Research Aim</h2>
@@ -263,17 +263,18 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 <p>FOCUS: specify -a limited number- of research questions, and be specific. Science is about finding what is looked for, not simply looking everywhere to describe what you see.</p>
 <p>Make explicit</p>
 <ul>
-<li>what are the research questions (questions, not stories, not a description of results)</li>
+<li>what are the research questions (questions, not stories, not a description of results, check on the Net how to set up a good research question)</li>
 <li>what are the results -at a minimum- to consider the study successful (eg., significant difference)</li>
 <li>what are the expected results (eg., treatment outperforms control, an accurate estimate of the influence of age, …)</li>
 </ul>
 <p>The aim you specify has consequences for how you need to justify the study, what the implications and requirements are.</p>
 <p>Maybe consider the following rough distinction in types of research that may help bring focus in your arguments. The types of design, for example experimental, observational, … will be discussed in a later section.</p>
-<p>The purpose of the research could be</p>
+<div id="purpose" class="section level3">
+<h3>Purpose</h3>
 <ul>
 <li>CONFIRMATORY
 <ul>
-<li><p>reason: confirm an expected difference, equality, relation, … (you know what you are looking for)</p></li>
+<li>reason: confirm an expected difference, equality, relation, … (you know what you are looking for)</li>
 <li>focus: statistical test or parameter estimate with pre-specified confidence bounds</li>
 <li>requirement: sample size derivation and relation with cost/availability of observations
 <ul>
@@ -282,6 +283,7 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 <li>discuss cost for the researcher / research unit / observation (eg., risks, money, time, …)</li>
 <li>discuss availability of sample size (eg., could more be taken)</li>
 </ul></li>
+<li>minimum: statistical effect / sufficient accuracy for primary hypotheses</li>
 </ul></li>
 <li>EXPLORATORY
 <ul>
@@ -292,6 +294,7 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 <li>testing/accuracy is typically not the primary aim, but could be secondary</li>
 </ul></li>
 <li>focus B: qualitative understanding</li>
+<li>focus C: predictive modeling</li>
 <li>requirement: sample size -justification- in relation to costs
 <ul>
 <li>balance -&gt; value of new information vs. costs data collection</li>
@@ -301,12 +304,13 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 <li>consider sample size derivation based on confidence intervals</li>
 </ul></li>
 </ul></li>
+<li>minimum: could be many things, as long as you can sufficiently argue its merit</li>
 <li>BEWARE: your study should be of interest without significant results !</li>
 </ul></li>
 <li>PREPARATORY
 <ul>
 <li>reason: to collect data (and monitor procedures) in preparation of -future- studies</li>
-<li>justification: the need for such information for implementing succesful -future- studies</li>
+<li>justification: the need for such information for implementing successful -future- studies</li>
 <li>focus: small scale set-up to show the potential and/or detect issues
 <ul>
 <li>phase I and II clinical designs
@@ -323,7 +327,8 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 <li>not necessarily including all aspects of future study</li>
 <li>eg., 3 observations per condition (allow for estimation of variance)</li>
 </ul></li>
-<li>NOTE: qualitative research can be used preparatory too</li>
+<li>minimum: ensures information required for future study</li>
+<li>NOTE: qualitative research can be used preparatory too, eg., mixed methods</li>
 </ul></li>
 <li>TECHNICAL - TECHNOLOGICAL advancements
 <ul>
@@ -335,28 +340,75 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 <li>development application</li>
 </ul></li>
 <li>focus: rarely any statistics involved</li>
-<li>requirement: methodology not related to quantitive research</li>
+<li>requirement: methodology not related to quantitative research</li>
+<li>minimum: particular state of advancement, improvement</li>
+<li>NOTE: testing might involve additional statistics</li>
 </ul></li>
 </ul>
+</div>
+<div id="quantitative-and-qualitative" class="section level3">
+<h3>Quantitative and Qualitative</h3>
+<p>Distinguishing between the how and the why</p>
+<ul>
+<li>Quantitative
+<ul>
+<li>focus on population, aim at generalization</li>
+<li>uses (ideally) representative samples</li>
+<li>can be descriptive and/or inferential</li>
+</ul></li>
+<li>Qualitative (holistic/subjective)
+<ul>
+<li>focus on understanding of object of research: reasons, opinions, motivations, …</li>
+<li>typically explorative / hypothesis generating</li>
+</ul></li>
+</ul>
+<p>Note: there is a continuum between the two and both can be used jointly/consecutively</p>
+</div>
+<div id="describe-versus-infer" class="section level3">
+<h3>Describe versus Infer</h3>
+<p>Distinguishing between the sample and the population</p>
+<ul>
+<li>Infer: ‘population’
+<ul>
+<li>focus on population, aim at generalization</li>
+<li>uses (ideally) representative samples</li>
+<li>requires estimation of uncertainty</li>
+</ul></li>
+<li>Describe: ‘sample’
+<ul>
+<li>focus on the observed data</li>
+<li>present data as is</li>
+<li>use no uncertainty of estimation, nor p-values</li>
+</ul></li>
+</ul>
+<p>Note: inference usually is preceeded with descriptions</p>
 <!-- DESIGN / STATS -->
+</div>
 </div>
 <div id="research-design" class="section level2">
 <h2>Research Design</h2>
 <p>Garbage in… garbage out !</p>
+<p>A poor design will make the study inefficient at best, and fully invalidate the study at worst.</p>
+<p>Books are written about design and its relation to statistics and inference.</p>
 <p>To answer your research question, information is required</p>
 <ul>
-<li>relevant information obtained from relevant observation</li>
+<li>relevant information obtained from relevant observations</li>
 <li>with quality dependent on the
 <ul>
-<li>conditions of observation eg., independent groups, cross-over, split-plot, …</li>
+<li>conditions of observation eg., independent groups, cross-over, split-plot, spreading of time points, …</li>
 <li>method of observation eg., interview, survey, test result, …</li>
 </ul></li>
-<li>with generalization dependent on the selection of research units eg., large random sample, convenience sample, …</li>
+<li>with generalization dependent on the selection of research units eg., large random sample, stratified sampling, clustered sampling, …</li>
 </ul>
-<p>Note: A poor design will make the study inefficient at best, and fully invalidate the study at worst.</p>
 <div id="from-observation-to-information-to-conclusion" class="section level3">
 <h3>From observation to information to conclusion</h3>
-<p>Books are written about design and its relation to statistics and inference.</p>
+<p>Observations provide information that is used to</p>
+<ul>
+<li>test (significance)</li>
+<li>estimate (confidence interval)</li>
+<li>predict (cross validation)</li>
+<li>understand (qualitative)</li>
+</ul>
 <p>common issues:</p>
 <ul>
 <li>how many observations (~ amount of information)</li>
@@ -371,19 +423,12 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 </ul>
 <p>All questions may be relevant to evaluate how to extract the required information and what can concluded based on it.</p>
 </div>
-<div id="number-of-observations-quantity-of-information" class="section level3">
-<h3>Number of Observations: Quantity of Information</h3>
-<p>Observations provide information that is used to</p>
-<ul>
-<li>test (significance)</li>
-<li>estimate (confidence interval)</li>
-<li>predict (cross validation)</li>
-<li>understand (qualitative)</li>
-</ul>
+<div id="quantity-of-information-number-of-observations" class="section level3">
+<h3>Quantity of Information: Number of Observations</h3>
 <p>Observations typically involve a cost (money, time, ethical concerns, …), so plan accordingly.</p>
 <p>Sample sizes are determined depending on the type of research (see above)</p>
 <ul>
-<li>calculate how many observations are required for a succesful study (significance / high enough accuracy)</li>
+<li>calculate how many observations are required for a successful study (significance / high enough accuracy)</li>
 <li>justify the sample size in relation to the cost of observation and value of information</li>
 <li>take the minimum that gives a rough idea</li>
 </ul>
@@ -401,37 +446,21 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 <li>uncertainty: should ideally be based on earlier data/research or pilot</li>
 </ul>
 <p>Issue: if you are interested to detect a difference between two groups when you have more than two groups, do not derive sample sizes for the omnibus F-tests. Issue: sample size are always obtained for future studies, never as a justification for used sample sizes (retrospective power analysis is meaningless).</p>
+<p>Note: an equivalent notion in qualitative research is saturation, explain how you evaluate it</p>
 </div>
-<div id="allocation-to-conditions-of-observation-quality-of-information" class="section level3">
-<h3>Allocation to Conditions of Observation: Quality of Information</h3>
+<div id="quality-of-information-conditions-of-observation" class="section level3">
+<h3>Quality of Information: Conditions of Observation</h3>
 <p>Different types of research have different consequences on the quality of the collected information and its processing.</p>
-<ul>
-<li>QUANTITATIVE
-<ul>
-<li>main question is ‘how’</li>
-<li>focus on population, aim at generalization</li>
-<li>uses (ideally) representative samples</li>
-<li>can be descriptive and/or inferential</li>
-</ul></li>
-<li>QUALITATIVE (holistic/subjective)
-<ul>
-<li>main question is ‘why’</li>
-<li>focus on understanding of object of research: reasons, opinions, motivations, …</li>
-<li>typically explorative / hypothesis generating</li>
-</ul></li>
-</ul>
-<p>Note: there is a continuum between the two and both can be used jointly/consecutively</p>
-<p>For quantitive research:</p>
-<p>The conditions under which observations are made determine their informational value, refered to as design.</p>
+<p>The conditions under which observations are made determine their informational value, referred to as design.</p>
 <p>A general principle is to</p>
 <ul>
-<li>experimentally control the confounding variables (randomisation, blocking, …) as good as possible</li>
+<li>experimentally control the confounding variables (randomization, blocking, …) as good as possible</li>
 <li>minimize non-systematic variability (eg., use a reliable tool for measurement)</li>
 <li>maximize systematic variability (eg., use conditions that are as different as possible given the hypothesis)</li>
 </ul>
 <p>Control on confounding variables</p>
 <ul>
-<li>randomisation to balance out various disturbances</li>
+<li>randomization to balance out various disturbances</li>
 <li>enhance comparability (control for unwanted influences)
 <ul>
 <li>blocking (compare observation with others within a block)</li>
@@ -443,8 +472,8 @@ rmarkdown::render(paste0(fname,".Rmd"),output_format=c('html_document'))
 </ul>
 <p>Note: the underlying reasoning always is to isolate the effect of interest either by avoiding or measuring unwanted influences.</p>
 </div>
-<div id="selection-of-research-units-generalizability" class="section level3">
-<h3>Selection of Research Units: Generalizability</h3>
+<div id="generalizability-selection-of-research-units" class="section level3">
+<h3>Generalizability: Selection of Research Units</h3>
 <p>Generalization (inference) is dependent on the research units under study and how they are sampled.</p>
 <p>For generalization, a big enough representative sample is required.</p>
 <ul>
@@ -464,7 +493,7 @@ a random sample of elderly patients that you know personally strictly does not a
 <h3>Example</h3>
 <p>The aim is to show that the proposed treatment is an improvement over the current standard method.</p>
 <p>Participants are randomized into two groups, the treatment and the control group. The control group is given a dummy treatment that mimics as good as possible the actual treatment. A post experiment survey will address whether participants were aware about the use of a dummy treatment. Each participant is measured once, immediately after the (dummy) treatment was administered which results in one score per patient, continuous on a 0 to 10 scale. A t-test for independent means is used to evaluate whether the scores in the treatment group are higher than the scores in the control group.</p>
-<p>A sample size was derived for the t-test to detect a minimal difference of 2 in favor of the treatment which was decided upon by our expert panel. The standard method is described in literature to have a population standard deviation of about 4 when used for our type of patients. Because no information is available on the new treatment it is assumed that the same population standard deviation applies. Therefore, a sample size of 51 patients in each of both groups is required for a one-sided test, type I error of .05 and power of .8. Because earlier experiments did show a drop-out of about 10%, 51/9*10 &lt; 57 patients in each group are included. Note that there is no reason to expect serious deviations from normality. A small but possible risk that is unforeseeable is that there may be much more variance in the treatment group, which would complicate the analyses and increase the required number of participants slightly.</p>
+<p>A sample size was derived for the t-test to detect a minimal difference of 2 in favor of the treatment which was decided upon by our expert panel. The standard method is described in literature to have a population standard deviation of about 4 when used for our type of patients. Because no information is available on the new treatment it is assumed that the same population standard deviation applies. Therefore, a sample size of 51 patients in each of both groups is required for a one-sided test, type I error of .05 and power of .8. Because earlier experiments did show a drop-out of about 10%, 51/9*10 &lt; 57 patients in each group are included. Note that there is no reason to expect serious deviations from normality. A small but possible risk that is unforeseeable is that there may be much more variance in the treatment group, which would complicate the analysis and increase the required number of participants slightly.</p>
 </div>
 </div>
 <div id="statistics" class="section level2">
@@ -476,12 +505,12 @@ a random sample of elderly patients that you know personally strictly does not a
 </ul>
 <p>Specify what is of primary interest and how it answers your questions</p>
 <ul>
-<li>p-value, confidence interval, probability of succesful prediction, …</li>
+<li>p-value, confidence interval, probability of successful prediction, …</li>
 <li>example: test whether Treatment is not worse with 1 point on the scale compared to the Control, so p-value for non-inferiority &lt;.05 with margin 1</li>
 </ul>
 <p>Reflect on likely challenges and how to deal with them for the analysis of main importance</p>
 <ul>
-<li>do not simply list your full statistics course 101, but explain why certain issues could arise</li>
+<li>do not simply list all possible statistical techniques, but explain why certain issues could arise</li>
 <li>example: deviations from normality often observed, dealt with using log-transformations.</li>
 </ul>
 <p>Best practice (in the ideal world)</p>
