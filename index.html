@@ -301,6 +301,7 @@ $(document).ready(function(){
 					<div class="panel-body" align="center">
 						<p align="justify"><a href="#" data-toggle="modal" data-target="#workshopSampleSizeGPower"><i class="fa fa-square-o"></i>&nbsp;&nbsp;Sample Size Calculation with GPower</a><br>Workshop for Phd. students / Postdocs (info & slides)</p>
 						<p align="justify"><a href="drafts/communicate.html" target="_new"><i class="fa fa-square-o"></i>&nbsp;&nbsp;Research Proposals:<br>how to communicate methodology and statistics</a><br>A draft for guidance: work in progress <a href="drafts/communicate.pdf" target='_new'>(pdf)</a></p>
+						<p align="justify"><a href="https://icds.shinyapps.io/shinyt/" target='_blank'><i class="fa fa-circle-thin"></i>&nbsp&nbsp;Shiny App T-test</a><br>explore relation data and independent t-test</p>
 						<!--
 						<p align="justify"><a href="drafts/dosdonts.html" target="_new"><i class="fa fa-square-o"></i>&nbsp;&nbsp;Do's and Don'ts:<br>tips and misconceptions to avoid</a><br>A draft for guidance: work in progress <a href="drafts/dosdonts.pdf" target='_new'>(pdf)</a></p>
 						-->
@@ -308,7 +309,8 @@ $(document).ready(function(){
 				</div>
 				<div class="col-sm-5 col-sm-offset-1">
 					<div class="panel-body" align="center">
-						<p align="justify"><a href="https://icds.shinyapps.io/shinyt/" target='_blank'><i class="fa fa-circle-thin"></i>&nbsp&nbsp;Shiny App T-test</a><br>explore relation data and independent t-test</p>
+						<p align="left"><a href="#" data-toggle="modal" data-target="#geckoboard" title="data fallacies"><img src="assets/images/data_fallacies.png" alt="geckoboard.com" style="width:286px;"></img></a>
+
 					</div>
 				</div>
 
@@ -538,6 +540,26 @@ $(document).ready(function(){
 	<!-- Contact start -->
 
 <!-- Modal -->
+<div id="geckoboard" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">      </div>
+      <div class="modal-body">
+			<img id="myImg" src="assets/images/data_fallacies.png" alt="geckoboard.com"></img>
+      </div>
+      <div class="modal-footer">
+		<p align="justify">
+		<small>
+			<font color="#aaaaaa">
+			</font>
+		</small>
+		</p>
+		<a href="#" data-dismiss="modal"><i class="fa fa-remove"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="serviceThesis" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
@@ -835,6 +857,5 @@ $(document).ready(function(){
 			$('.carousel').carousel('cycle');
 		});
 	</script>
-	
 </body>
 </html>
