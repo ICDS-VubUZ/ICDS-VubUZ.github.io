@@ -1,0 +1,2596 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="author" content="Wilfried Cools (ICDS) &amp; Sven Van Laere (BiSI)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/zenburn.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/presentation.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/icds.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1></h1>
+    <h2>Sample size calculation with GPower</h2>
+    <p>Wilfried Cools (ICDS) &amp; Sven Van Laere (BiSI)<br/>https://www.icds.be/</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <article data-timings="">
+    <style>
+.title-slide {
+  background-color: #FFFFFF; /* #EDE0CF; ; #CA9F9D*/
+}
+em {
+  font-style: italic;
+  font-size: 20
+}
+mini {
+  font-size: .7em;
+}
+</style>
+
+<!-- 
+library(slidify)
+setwd("C:\\Users\\wcools\\Documents\\workshops\\sample size GPower")
+slidify("sample Size GPower 19.Rmd")
+-->
+
+<h2>sample size calculation: why &amp; how</h2>
+
+<!-- S
+sample size for sufficient information
+--> 
+
+<ul>
+<li>what about my sample size ?</li>
+<li>more is better &equiv; observation &rarr; information
+
+<ul>
+<li>but increasingly less so</li>
+<li>but limited resources (time/money)</li>
+<li>but ethical and practical considerations</li>
+</ul></li>
+<li>how many is good enough ?
+
+<ul>
+<li>depends on what you want</li>
+</ul></li>
+<li>workshop &rarr; how to calculate it ?
+
+<ul>
+<li>understand the reasoning</li>
+<li>apply for simple but common situations</li>
+</ul></li>
+<li>not one simple formula for all &rarr; GPower to the rescue</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>sample size calculation: a design issue</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+for future data (methodological) not always possible
+-->
+
+<ul>
+<li>linked to statistical inference
+
+<ul>
+<li><code>testing</code> &rarr; power [probability to detect existing <code>effects</code>]</li>
+<li><code>estimation</code> &rarr; accuracy [size of <code>confidence intervals</code>]</li>
+</ul></li>
+<li>before data collection, during design of study
+
+<ul>
+<li>requires understanding: future data, analysis, inference (effect size, focus, ...)</li>
+<li>conditional on assumptions &amp; decisions</li>
+</ul></li>
+<li>not always possible nor meaningful !
+
+<ul>
+<li>easier for experiments (control), less for observational studies</li>
+<li>easier for confirmatory studies, much less for exploratory studies</li>
+<li>NO retrospective power analyses &rarr; OK for future study only
+<BR><mini>Hoenig, J., &amp; Heisey, D. (2001). The Abuse of Power: The Pervasive Fallacy of Power Calculations for Data Analysis. <em>The American Statistician, 55</em>, 19–24.</mini></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>simple example</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+simple example kurt, changed a bit
+--> 
+
+<ul>
+<li>evaluation of radiotherapy to reduce a tumor in mice</li>
+<li>comparing treatment group with control (=conditions)</li>
+<li>tumor induced, random assignment treatment or control (equal if no effect)</li>
+<li>after 20 days, measurement of tumor size (=observations)</li>
+<li>analysis: 
+
+<ul>
+<li>unpaired t-test to compare averages for treatment and control</li>
+</ul></li>
+<li>goal: 
+
+<ul>
+<li>if the average size in treatment is at least 20% less than control<BR>then we want to detect it (significance)</li>
+</ul></li>
+<li>the main issue:
+
+<ul>
+<li>how to calculate the required sample size to determine the effect aimed for ?</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>overview</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+structure of the talk
+--> 
+
+<ul>
+<li>PART I: building blocks in action for t-test
+
+<ul>
+<li>sizes: effect size, sample size</li>
+<li>errors: type I (\(\alpha\)), type II (\(\beta\))</li>
+<li>distributions: Ho, Ha</li>
+<li>criterion: confidence (estimation), power (testing)</li>
+</ul></li>
+<li>PART II: moving beyond independent t-test
+
+<ul>
+<li>dependent groups</li>
+<li>non-parametric distributions</li>
+<li>multiple groups (ANOVA: omnibus, pairwise, focused)</li>
+<li>proportions, correlations, ...</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>PART I: building blocks in action for t-test</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+* reference example
+* a formula or GPower
+* building blocks, input and output
+* testing, using Ho and Ha
+* estimation, without Ha
+* other distributions or designs
+* type I/II error probability
+* effect sizes, examples and rules of thumb
+* effect sizes, determine them in theory and practice
+* relation building blocks
+-->
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>reference example</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+reference example for part I + App
+-->
+
+<ul>
+<li>sample sizes easy and meaningful to calculate for well understood problems</li>
+</ul>
+
+<div style='float:left;width:62%;'>
+  <ul>
+<li>apriori specifications
+
+<ul>
+<li>intend to perform a statistical test</li>
+<li>comparing 2 equally sized groups</li>
+<li>to detect <u>difference</u> of at least 2</li>
+<li>assuming an <u>uncertainty</u> of 4 SD on each mean</li>
+<li>which results in an <u>effect size</u> of .5</li>
+<li>evaluated on a Student t-distribution</li>
+<li>allowing for a <u>type I error</u> prob. of .05 \((\alpha)\)</li>
+<li>allowing for a <u>type II error</u> prob. of .2 \((\beta)\)</li>
+</ul></li>
+<li><u>sample size</u> conditional on specifications being true</li>
+</ul>
+
+</div>
+<div style='float:right;width:33%;'>
+  <p><br><br>
+<img src="ttestData.png" width=300></img>
+<a href="https://icds.shinyapps.io/shinyt/">https://icds.shinyapps.io/shinyt/</a></p>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>a formula you could use</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+a simple formula for sample size calculation
+-->
+
+<div style='float:left;width:62%;'>
+  <ul>
+<li>for this particular case:
+
+<ul>
+<li>sample size (n &rarr; <code>?</code>)</li>
+<li>difference (d=signal &rarr; <code>2</code>)</li>
+<li>uncertainty (\(\sigma\)=noise &rarr; <code>4</code>)</li>
+<li>type I errors (\(\alpha\) &rarr; <code>.05</code>, so \(Z_{\alpha/2}\) &rarr; -1.96)</li>
+<li>type II errors (\(\beta\) &rarr; <code>.2</code>, so \(Z_\beta\) &rarr; -0.84)</li>
+</ul></li>
+</ul>
+
+</div>
+<div style='float:right;width:33%;'>
+  <p>\(n = \frac{(Z_{\alpha/2}+Z_\beta)^2 * 2 * \sigma^2}{d^2}\)
+\(n = \frac{(-1.96-0.84)^2 * 2 * 4^2}{2^2} = 62.79\)
+<img src="NormalDist.png" width=300></img></p>
+
+</div>
+<div style='float:left;'>
+  <ul>
+<li>sample size = 2 groups x 63 observations = 126</li>
+<li>note: formula&#39;s are test and statistic specific but logic remains same</li>
+<li>this and other formula&#39;s implemented in various tools, our focus: <code>GPower</code></li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>GPower: a useful tool</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+GPower to use many formulas
+-->
+
+<div style='float:left;width:62%;'>
+  <ul>
+<li>popular and well established</li>
+<li>free @ <a href="http://www.gpower.hhu.de/">http://www.gpower.hhu.de/</a></li>
+<li>implements wide variety of tests</li>
+<li>implements various visualizations</li>
+<li>documented fairly well</li>
+<li>note: not all tests are included !</li>
+</ul>
+
+</div>
+<div style='float:right;width:33%;'>
+  <p><img src="GPowerStart.png"></img></p>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>GPower: the building blocks in action</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+GPower building blocks
+-->
+
+<ul>
+<li>For this example, calculate sample size based on
+
+<ul>
+<li>effect size (difference of interest, scaled on standard deviation)</li>
+<li>type I and type II error</li>
+</ul></li>
+</ul>
+
+<p><img src="flow.gif" height=1000 align="center"></img></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>GPower input</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+GPower exemplary input
+-->
+
+<div style='float:left;width:48%;' class='centered'>
+  <ul>
+<li>t-test : difference two indep. means</li>
+<li>apriori: calculate sample size</li>
+<li>effect size = standardized difference
+
+<ul>
+<li>Cohen&#39;s \(d\)</li>
+<li>\(d\) = |difference| / SD_pooled</li>
+<li>\(d\) = |<code>0-2</code>| / <code>4</code> = <code>.5</code></li>
+</ul></li>
+<li>\(\alpha\) = <code>.05</code>, 2 - tailed <mini>(\(\alpha\)/2 &rarr; .025 &amp; .975)</mini></li>
+<li>\(power = 1-\beta\) = <code>.8</code></li>
+<li>allocation ratio = <code>1</code></li>
+<li><code>~ reference example</code></li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p><img src="GPowerEx1xInput.png" width=500></img></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>GPower output</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+GPower exemplary output
+-->
+
+<div style='float:left;width:62%;'>
+  <ul>
+<li>sample size (\(n\)) =  64 x 2 = (<code>128</code>)</li>
+<li>degrees of freedom (\(df\)) = 126 (128 - 2)</li>
+<li>plot showing null <code>Ho</code> and alternative <code>Ha</code> distribution 
+
+<ul>
+<li>in GPower central and non-central distribution</li>
+<li><code>Ho</code> &amp; critical value &rarr; decision boundaries
+
+<ul>
+<li>critical t  = 1.979, <code>qt(.975,126)</code></li>
+</ul></li>
+<li><code>Ha</code>, shift with non-centrality parameter &rarr; truth
+
+<ul>
+<li>non centrality parameter (\(\delta\)) = 2.8284 <br><code>2/(4*sqrt(2))*sqrt(64)</code></li>
+</ul></li>
+</ul></li>
+<li>power &ge; .80 (1-\(\beta\)) = 0.8015</li>
+</ul>
+
+</div>
+<div style='float:right;width:33%;'>
+  <p><img src="GPower1Output.png"></img></p>
+
+<!--![GPower](GPower1.png)-->
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>reference example protocol</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+reference to start from
+-->
+
+<p>t tests - Means: Difference between two independent means (two groups) <br>
+Analysis:   A priori: Compute required sample size  <br>
+<br>
+Input:  Tail(s) =   Two <br>
+    Effect size <code>d</code> =   <code>0.5000000</code>  <br>
+    <code>α</code> err prob =   <code>0.05</code> <br>
+    Power (<code>1-β</code> err prob)   =   <code>.8</code>  <br>
+    Allocation ratio N2/N1  =   1 <br>
+<br>
+Output: <code>Noncentrality</code> parameter δ  =   <code>2.8284271</code>  <br>
+    <code>Critical t</code>    =   <code>1.9789706</code>  <br>
+    Df  =   126  <br>
+    Sample size group 1 =   <code>64</code>  <br>
+    Sample size group 2 =   <code>64</code>  <br>
+    Total <code>sample size</code> =   <code>128</code>  <br>
+    Actual power    =   0.8014596  <br></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<br>
+<br></p>
+
+<h3>distributions</h3>
+
+<h3>their cut-offs (type I and II <b>errors</b>)</h3>
+
+<h3>the distance between them (sample and effect <b>sizes</b>)</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>GPower distributions</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+distributions for each of 5 families of tests
+-->
+
+<div style='float:left;width:48%;' class='centered'>
+  <ul>
+<li>distribution based test selection
+
+<ul>
+<li>Exact Tests (8)</li>
+<li>\(t\)-tests (11) &rarr; <code>reference</code></li>
+<li>\(z\)-tests (2)</li>
+<li>\(\chi^2\)-tests (7) </li>
+<li>\(F\)-tests (16)</li>
+</ul></li>
+<li>focus on the density functions</li>
+</ul>
+
+<p><img src="Xdist.png" width=500></img></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <ul>
+<li>design based test selection
+
+<ul>
+<li>correlation &amp; regression (15)</li>
+<li>means (19) &rarr; <code>reference</code></li>
+<li>proportions (8)</li>
+<li>variances (2)</li>
+</ul></li>
+<li>focus on the type of parameters</li>
+</ul>
+
+<p><br>
+<img src="Fdist.png" width=500></img></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Ho and Ha distributions</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+Ho and Ha are different
+-->
+
+<div style='float:left;width:62%;'>
+  <ul>
+<li><code>Ho</code> acts as \(\color{red}{benchmark}\) &rarr; eg., no difference
+
+<ul>
+<li><code>Ho ~ t(0,df)</code> \(\color{green}{cut off}\) using \(\alpha\), </li>
+<li>reject <code>Ho</code> if test returns <code>implausible</code> value</li>
+</ul></li>
+<li><p><code>Ha</code> acts as $\color{blue}{truth} $ &rarr; eg., difference of .5 SD</p>
+
+<ul>
+<li><code>Ha ~ t(ncp,df)</code></li>
+<li><code>ncp</code> as violation of <code>Ho</code> &rarr; shift (location/shape)</li>
+</ul></li>
+<li><p><img src="flowHoa.gif" width=550 align="left"></img></p></li>
+</ul>
+
+</div>
+<div style='float:right;width:33%;'>
+  <p><img src="GPower1.png" width=350></img></p>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>non-centrality: Ho &rarr; Ha</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+non-centrality using the Ha
+-->
+
+<div style='float:left;width:62%;'>
+  <ul>
+<li><p><code>ncp</code> : non-centrality parameter</p>
+
+<ul>
+<li>shift between <code>Ho</code> and <code>Ha</code>
+
+<ul>
+<li>assumed <code>effect size</code> (target or signal)</li>
+<li>conditional on <code>sample size</code> (information)</li>
+</ul></li>
+<li>overlap &rarr; power or sample size<br>using \(\alpha\) on <code>Ho</code> and \(\beta\) on <code>Ha</code> </li>
+</ul></li>
+<li><p><code>Ha</code> is NOT interchangeable with <code>Ho</code></p>
+
+<ul>
+<li>absence of evidence \(\neq\) evidence of absence </li>
+<li>equivalence testing (<code>Ha</code> for &#39;no effect&#39;)</li>
+</ul></li>
+</ul>
+
+</div>
+<div style='float:right;width:33%;'>
+  <p><img src="GPower1.png" width=350></img>
+<a href="https://icds.shinyapps.io/shinyt/">https://icds.shinyapps.io/shinyt/</a></p>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>divide by n perspective on distributions</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+divide by n = true alternative
+-->
+
+<div style='float:left;width:62%;'>
+  <p><img src="BellePowerCurve.png" width=500></img></p>
+
+</div>
+<div style='float:right;width:33%;'>
+  <ul>
+<li>remember:
+\(n = \frac{(Z_{\alpha/2}+Z_\beta)^2 * 2 * \sigma^2}{d^2}\)
+\(n = \frac{(-1.96-0.84)^2 * 2 * 4^2}{2^2}\)
+\(n = 62.79\)
+<img src="GPower1.png" width=250></img></li>
+</ul>
+
+</div>
+<div style='float:left;'>
+  <ul>
+<li>non-centrality parameter, sample size translates <code>Ha</code></li>
+<li>alternative: sample size changes standard deviation</li>
+<li><a href="https://icds.shinyapps.io/shinyt/">https://icds.shinyapps.io/shinyt/</a></li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>no Ha for estimation</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+precision analyses, size of an effect instead of existence
+KURT: map E on d !!
+2DO: make exercise !!
+-->
+
+<ul>
+<li>focus on <code>estimation</code>, plausible values of effect, not testing or power </li>
+<li>sample size without type II error \(\beta\), power, <code>Ho</code> or <code>Ha</code></li>
+<li>~ divide by n perspective but shifted to estimate</li>
+<li>precision analysis &rarr; set maximum width confidence interval
+
+<ul>
+<li>let E = maximum half width of confidence interval to accept</li>
+<li>for confidence level \(1-\alpha\)</li>
+<li>\(n = z^2_{\alpha/2} * \sigma^2 * 2 / \:E^2\) (for 2 groups)</li>
+</ul></li>
+<li>equivalence with statistical testing
+
+<ul>
+<li>if 0 (or other reference) outside confidence bounds &rarr; significant</li>
+</ul></li>
+<li>NOT GPower</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>type I/II error probability</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+2 types of errors in all types of tests
+-->
+
+<div style='float:left;width:62%;'>
+  <ul>
+<li>distribution cut-off&#39;s (density &rarr; AUC=1)</li>
+<li>decide whether to reject <code>Ho</code> <b>assuming</b> <code>Ha</code></li>
+<li>two types of error
+
+<ul>
+<li>P(infer=<code>Ha</code>|truth=<code>Ho</code>) = \(\alpha\)</li>
+<li>P(infer=<code>Ho</code>|truth=<code>Ha</code>) = \(\beta\)</li>
+</ul></li>
+<li>two types of correct inference
+
+<ul>
+<li>P(infer=<code>Ho</code>|truth=<code>Ho</code>) = \(1-\alpha\)</li>
+<li>P(infer=<code>Ha</code>|truth=<code>Ha</code>) = \(1-\beta\) &rarr; power</li>
+</ul></li>
+<li>cut-off &#39;known&#39; <code>Ho</code> for statistical test
+
+<ul>
+<li>two tailed &rarr; both sides informative on <code>Ho</code> </li>
+<li>one tailed &rarr; one side not informative on <code>Ho</code></li>
+</ul></li>
+</ul>
+
+</div>
+<div style='float:right;width:33%;'>
+  <p><img src="GPower1.png" width=350></img></p>
+
+<table>
+<tr>
+<td></td>
+<td>infer=Ha</td>
+<td>infer=Ho</td>
+<td>sum</td>
+</tr>
+<tr>
+<td>truth=Ho</td>
+<td>$\alpha$</td>
+<td>1-$\alpha$</td>
+<td>1</td>
+</tr>
+<tr>
+<td>truth=Ha</td>
+<td>1-$\beta$</td>
+<td>$\beta$</td>
+<td>1</td>
+</tr>
+</table>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>error exercise : create plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- exercise on errors I and II
+[CREATE PLOT]
+generating and interpreting a power plot [power/effect size]
+-->
+
+<div style='float:left;width:40%;'>
+  <ul>
+<li>create plot <BR>(X-Y plot for range of values) </li>
+<li>plot sample size by type I error</li>
+<li>set plot to 4 curves
+
+<ul>
+<li>for power .8 in steps of .05</li>
+</ul></li>
+<li>set \(\alpha\) on x-axis
+
+<ul>
+<li>from .01 to .2 in steps of .01</li>
+</ul></li>
+<li>use effect size .5</li>
+</ul>
+
+</div>
+<div style='float:right;width:50%;'>
+  <p><img src="gpErrorEx1.png" width=500></img></p>
+
+<p>notice Table option</p>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>error exercise : interpret plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- exercise on errors I and II
+[INTERPRET PLOT <4 questions> ]
+generating and interpreting a power plot [power/effect size]
+-->
+
+<div style='float:left;width:40%;'>
+  <ul>
+<li>where on the red curve (right)<BR>type II error = 4 * type I error ?</li>
+<li>when smaller effect size (.25), what changes ?</li>
+<li>switch power and sample size (32 in step of 32)<BR>what is relation type I and II error ?</li>
+</ul>
+
+</div>
+<div style='float:right;width:50%;'>
+  <p><img src="GPowerPowerError.png" width=500></img></p>
+
+<ul>
+<li>where on the yellow curve (left)<BR>type II error = 4 * type I error ?</li>
+</ul>
+
+</div>
+<div style='float:left;'>
+  <p><img src="gpErrorEx2.png" width=450></img></p>
+
+<ul>
+<li>for allocation rate 4, compare plots</li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>decide type I/II error probability</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+errors related to power and accuracy
+-->
+
+<div style='float:left;width:62%;'>
+  <ul>
+<li>rules of thumb ?
+
+<ul>
+<li>\(\alpha\) in range .01 - .05 &rarr; 1/100 - 1/20</li>
+<li>\(\beta\) in range .1 to .2 &rarr; power = 80% to 90%</li>
+</ul></li>
+<li>\(\alpha\) &amp; \(\beta\) inversely related
+
+<ul>
+<li>if \(\alpha = 0\) &rarr; never reject, no power</li>
+<li>if power 99% &rarr; high \(\alpha\) for same sample size</li>
+</ul></li>
+<li>determine the balance
+
+<ul>
+<li>which error you want to avoid most ?
+
+<ul>
+<li>cheap aids test ? &rarr; avoid type II</li>
+<li>heavy cancer treatment ? &rarr; avoid type I</li>
+</ul></li>
+<li>\(\alpha\) &amp; \(\beta\) often selected in 1/4 ratio<br>type I error is 4 times worse !!</li>
+</ul></li>
+</ul>
+
+</div>
+<div style='float:right;width:33%;'>
+  <p><img src="GPower1.png" width=350></img></p>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>interim analyses: control type I error</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+alpha spending
+-->
+
+<ul>
+<li>analyze and proceed ? (peeking)
+
+<ul>
+<li>multiple testing as data is collected</li>
+<li>inflates type I error \(\alpha\)</li>
+</ul></li>
+<li>correct \(\alpha\)
+
+<ul>
+<li>interim analysis specific \(\alpha_i\) with overall \(\alpha\) under control</li>
+</ul></li>
+<li>suggested technique: alpha spending
+
+<ul>
+<li>plan in advance</li>
+<li>use O&#39;Brien - Flemming bounds</li>
+<li>NOT GPower
+
+<ul>
+<li>determine with simulation tool: <a href="https://icds.shinyapps.io/aspending/">https://icds.shinyapps.io/aspending/</a></li>
+<li>commercial packages eg., PASS and other software (eg., ldbounds in R)</li>
+</ul></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>for fun: P(effect exists | test says so)</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+about the meaning of having a significant effect
+-->
+
+<ul>
+<li>power &rarr; P(test says there is effect | effect exists)</li>
+<li><mini>\(P(infer=Ha|truth=Ho) = \alpha\)</mini></li>
+<li><mini>\(P(infer=Ho|truth=Ha) = \beta\)</mini></li>
+<li><mini>\(P(infer=Ha|truth=Ha) = power\)</mini></li>
+<li><mini>\(P(\underline{truth}=Ha|\underline{infer}=Ha) = \frac{P(infer=Ha|truth=Ha) * P(truth=Ha)}{P(infer=Ha)}\)</mini> &rarr; Bayes Theorem</li>
+<li><mini>\(P(truth=Ha|infer=Ha) = \frac{P(infer=Ha|truth=Ha) * P(truth=Ha)}{P(infer=Ha|truth=Ha) * P(truth=Ha) + P(infer=Ha|truth=Ho) * P(truth=Ho)}\)</mini></li>
+<li><mini>\(P(truth=Ha|infer=Ha) = \frac{power * P(truth=Ha)}{power * P(truth=Ha) + \alpha * P(truth=Ho)}\)</mini> &rarr; depends on prior probabilities</li>
+<li>IF very low probability model is true, eg., .01 ? &rarr; <mini>\(P(truth=Ha) = .01\)</mini></li>
+<li>THEN probability effect exists if test says so is low, in this case only 14% !!</li>
+<li><mini>\(P(truth=Ha|infer=Ha) = \frac{.8 * .01}{.8 * .01 + .05 * .99} = .14\)</mini></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>effect sizes</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+KURT: variances of effect sizes -> use ?
+-->
+
+<ul>
+<li>degree with which a certain phenomenon holds (~ <code>Ho</code> is false)
+
+<ul>
+<li>part of non-centrality (as is sample size) &rarr; shift in GPower</li>
+<li>signal to noise ratio
+
+<ul>
+<li>typically not just the signal, to provide scale</li>
+<li>eg., difference on scale of pooled standard deviation</li>
+</ul></li>
+<li>bigger effect &rarr; more easy to detect it (pushing away <code>Ha</code>)</li>
+</ul></li>
+<li>2 main families of effect sizes &rarr; test specific
+
+<ul>
+<li>differences <code>d-family</code> // association <code>r-family</code></li>
+<li>transformations, eg., d = .5 &rarr; r = .243
+
+<ul>
+<li>\(d = \frac{2r}{\sqrt{1-r^2}}\); \(\hspace{20 mm}r = \frac{d}{\sqrt{d^2+4}}\); \(\hspace{20 mm}d = ln(OR) * \frac{\sqrt{3}}{\pi}\)</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<!--
+    - $V_d = \frac{4V_r}{(1-r^2)^3}$; $\hspace{15 mm}V_r = \frac{4^2V_d}{(d^2+4)^3}$; $\hspace{15 mm}V_d = V_{ln(OR)} * \frac{3}{\pi^2}$
+-->
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>effect sizes of Cohen</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S 
+statistic specific quantification violation Ha versus Ho
+-->
+
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="ES.png" height=100%></img></p>
+
+<ul>
+<li>Cohen, J. (1992). A power primer. Psychological Bulletin, 112, 155–159. </li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <ul>
+<li>famous Cohen conventions 
+
+<ul>
+<li>beware, just rules of thumb</li>
+<li>Cohen, J. (1988). Statistical power analysis for the behavioral sciences (2nd ed). </li>
+</ul></li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>effect sizes of d and r family</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+statistic specific quantification violation Ha versus Ho
+-->
+
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="ES2.png"></img></p>
+
+<ul>
+<li>most important effect size of 
+
+<ul>
+<li>d: dichotomous - continuous</li>
+<li>r: correlation - proportion variance</li>
+</ul></li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <ul>
+<li>Ellis, P. D. (2010). The essential guide to effect sizes: statistical power, meta-analysis, and the interpretation of research results.</li>
+<li>more than 70 different effect sizes... most of them related to each other</li>
+<li>NOT p-value ~ partly effect size, partly sample size or power
+
+<ul>
+<li>do not simply compare p-values !</li>
+</ul></li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>effect sizes in GPower (Determine)</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+the Determine box
+-->
+
+<div style='float:left;width:48%;' class='centered'>
+  <ul>
+<li>often very difficult to specify</li>
+<li>GPower offers help with <code>Determine</code>
+
+<ul>
+<li>difference group means <br>
+0-2 &rarr; signal
+~ minimally relevant (or expected)</li>
+<li>standard deviations (sd) <br>
+4 each group &rarr; expected noise
+~ natural diversity</li>
+<li>written to Effect Size <code>d</code> <br>
+.5 &rarr; difference in sd</li>
+</ul></li>
+<li>Reminder: effect size statistic depends on statistical test</li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p><img src="GPowerEx1x.png" width=500></img></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <hgroup>
+    <h2>effect size exercise : ingredients cohen d</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- exercise on effect size
+[PLAY WITH VALUES < 1, 2a,b, (3)> ]
+playing around with effect sizes
+-->
+
+<div style='float:left;width:48%;' class='centered'>
+  <p>For the <code>reference example</code>:</p>
+
+<ul>
+<li>change mean values from 0 and 2 to 4 and 6, what changes ?</li>
+<li>change sd values to 2 for each, what changes ?
+
+<ul>
+<li>effect size ?</li>
+<li>total sample size ?</li>
+<li>non-centrality ?</li>
+<li>critical t ?</li>
+</ul></li>
+<li>change sd values to 6 for each, what changes ? </li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p><img src="GPower0.png" width=500></img></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <hgroup>
+    <h2>effect size exercise : plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- exercise on effect size
+[PLOT]
+generating and interpreting a power plot [power/effect size]
+-->
+
+<div style='float:left;width:40%;'>
+  <ul>
+<li>plot power by effect size</li>
+<li>set plot to 6 curves
+
+<ul>
+<li>for sample sizes, 34 in steps of 34</li>
+</ul></li>
+<li>set effect sizes on x-axis
+
+<ul>
+<li>from .2 to 1.2 in steps of .05</li>
+</ul></li>
+<li>use \(\alpha\) equal to .05</li>
+</ul>
+
+</div>
+<div style='float:right;width:50%;'>
+  <ul>
+<li>create plot <BR>(X-Y plot for range of values) 
+<img src="GPowerPowerESx.png" width=500></img></li>
+</ul>
+
+</div>
+<div style='float:left;'>
+  <ul>
+<li>determine (approximately) the three situations from previous slide on the plot</li>
+<li>how does power change when doubling the effect size, eg., from .5 to 1 ?</li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h2>effect size exercise : imbalance</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- exercise on effect size
+[PLAY WITH VALUES < 1, 2a,b, (3)> ]
+playing around with imbalance
+-->
+
+<div style='float:left;width:40%;'>
+  <p>For the <code>reference example</code>:</p>
+
+<ul>
+<li>change allocation ratio from 1
+
+<ul>
+<li>to 2, .5, 3 and 4, what to conclude ?
+
+<ul>
+<li>ratio 2 and .5 ?</li>
+<li>imbalance + 1 or * 2 ?</li>
+</ul></li>
+</ul></li>
+<li>? no idea why n1 \(\neq\) n2 
+<img src="GPower0.png" width=300></img></li>
+</ul>
+
+</div>
+<div style='float:right;width:50%;'>
+  <p><img src="GPowerPowerES.png" width=500></img></p>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <hgroup>
+    <h2>effect sizes, how to determine them in theory</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+specifying effect sizes
+?KURT
+* examples
+    - explain at least 10% of the variance
+    - detect a decrease in score of at least 10%
+    - detect a difference of at least 1 point on a Likert scale
+    - detect a correlation of at least .3
+-->
+
+<ul>
+<li>choice of effect size matters &rarr; justify choice</li>
+<li>choice of effect size
+
+<ul>
+<li>NOT significant &rarr; meaningless, dependent on sample size</li>
+<li>realistic (eg., previously observed effect) &rarr; replicate</li>
+<li>important (eg., minimally relevant effect)</li>
+</ul></li>
+<li>use <code>Determine</code> to get started (check the manual)
+
+<ul>
+<li>for independent t-test &rarr; means and standard deviations</li>
+<li>possible alternative is to use variance explained, eg., 1 versus 16
+
+<ul>
+<li>with one-way ANOVA (f=.25 instead of d=.5)</li>
+<li>with linear regression (f\(^2\)=.0625 instead of d=.5)</li>
+<li><a href="https://www.psychometrica.de/effect_size.html#transform">https://www.psychometrica.de/effect_size.html#transform</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
+  <hgroup>
+    <h2>effect sizes, how to determine them in practice</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- S
+specifying effect sizes
+-->
+
+<ul>
+<li>experts / patients &rarr; use if possible &rarr; importance</li>
+<li>literature (earlier study / systematic review) &rarr; realistic</li>
+<li>pilot &rarr; guestimate dispersion estimate, but very small sample size</li>
+<li>internal pilot &rarr; stopping rule (sequential/conditional)</li>
+<li>turn to Cohen &rarr; use if everything else fails (rules of thumb)<br></li>
+<li>guestimate the input parameters, what can you do ?
+
+<ul>
+<li>sd from assumed range / 6 assuming normal distribution</li>
+<li>sd for proportions (&amp; percentages) at conservative .5</li>
+<li>sd from control, assume treatment the same</li>
+<li class='..</li>'></ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h2>relation samples &amp; effect size, errors I &amp; II</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- 
+relation between alpha, beta, sample and effect size
+-->
+
+<div style='float:left;width:33%;'>
+  <ul>
+<li>building blocks: 
+
+<ul>
+<li>sample size (\(n\))</li>
+<li>effect size (\(\Delta\))</li>
+<li>alpha (\(\alpha\))</li>
+<li>power (\(1-\beta\))</li>
+</ul></li>
+<li>each parameter</br>conditional on others</li>
+</ul>
+
+</div>
+<div style='float:right;width:62%;'>
+  <ul>
+<li>GPower &rarr; type of power analysis
+
+<ul>
+<li>Apriori: \(n\) <code>~</code> \(\alpha\), <code>power</code>, \(\Delta\)</li>
+<li>Post Hoc: <code>power</code> <code>~</code> \(\alpha\), \(n\), \(\Delta\) </li>
+<li>Compromise: <code>power</code>, \(\alpha\) <code>~</code> \(\beta\:/\:\alpha\), \(\Delta\), \(n\)</li>
+<li>Criterion: \(\alpha\) <code>~</code> <code>power</code>, \(\Delta\), \(n\)</li>
+<li>Sensitivity: \(\Delta\) <code>~</code> \(\alpha\), <code>power</code>, \(n\)</li>
+</ul></li>
+</ul>
+
+<p><img src="flow.gif" width=500></img></p>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
+  <article data-timings="">
+    <!-- 
+KURT: z-test and exact test
+-->
+
+<h2>type of power analysis exercise</h2>
+
+<!-- exercise on different types of analyses
+playing around with parameters
+-->
+
+<ul>
+<li>for given example, step through...
+
+<ul>
+<li>retrieve power given n, \(\alpha\) and \(\Delta\)</li>
+<li>[1] for power .8, take half the sample size, how does \(\Delta\) change ?</li>
+<li>[2] set \(\beta\)/\(\alpha\) ratio to 4, what is \(\alpha\) &amp; \(\beta\) ? what is the critical value ?</li>
+<li>[3] keep \(\beta\)/\(\alpha\) ratio to 4 for effect size .5, what is \(\alpha\) &amp; \(\beta\) ? critical value ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] .5 to .7115 = .2115, bigger effect size compensate for loss of sample size (sensitivity)</p></li>
+<li><p>[2] critical value 1.9990 with errors approx. .05 and .2 (compromise)</p></li>
+<li><p>[3] critical value 1.6994 with errors approx. double, .09 and .38</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-36" style="background:;">
+  <hgroup>
+    <h2>getting your hands dirty</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- 
+R code for given example to show steps
+-->
+
+<div style='float:left;width:33%;'>
+  <p><img src="GPower1.png" width=270></img></p>
+
+<pre><code># calculator
+m1=0;m2=2;s1=4;s2=4
+alpha=.025;N=128
+var=.5*s1^2+.5*s2^2
+d=abs(m1-m2)/sqrt(2*var)
+d=d*sqrt(N/2) 
+tc=tinv(1-alpha,N-1)
+power=1-nctcdf(tc,N-1,d)
+</code></pre>
+
+</div>
+<div style='float:right;width:62%;'>
+  <ul>
+<li>in <code>R</code>, assuming normality
+
+<ul>
+<li>qt &rarr; get quantile on <code>Ho</code> (\(Z_{1-\alpha/2}\))</li>
+<li>pt &rarr; get probability on <code>Ha</code> (non-central)</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">.n &lt;- 64
+.df &lt;- 2*.n-2
+.ncp &lt;- 2 / (4 * sqrt(2)) * sqrt(.n)
+.power &lt;- 1 -
+    pt(
+        qt(.975,df=.df),
+        df=.df, ncp=.ncp
+    ) - 
+    pt( qt(.025,df=.df), df=.df, ncp=.ncp)
+round(.power,4)
+</code></pre>
+
+<pre><code>## [1] 0.8015
+</code></pre>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-37" style="background:;">
+  <hgroup>
+    <h2>PART II: moving beyong independent t-test</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+-->
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-38" style="background:;">
+  <hgroup>
+    <h2>GPower examples beyond the independent t-test</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- 
+examplarly cases to show other distributions/parameters
+-->
+
+<ul>
+<li>so far, comparing two independent means</li>
+<li>selected topics with small exercises
+
+<ul>
+<li>dependent instead of independent</li>
+<li>non-parametric instead of assuming normality</li>
+<li>relations instead of groups (regression)</li>
+<li>correlations</li>
+<li>proportions, dependent and independent</li>
+<li>more than 2 groups (compare jointly, pairwise, focused)</li>
+<li>more than 1 predictor</li>
+<li>repeated measures</li>
+</ul></li>
+<li>GPower <a href="http://www.gpower.hhu.de/fileadmin/redaktion/Fakultaeten/Mathematisch-Naturwissenschaftliche_Fakultaet/Psychologie/AAP/gpower/GPowerManual.pdf" target="_new">manual</a> 27 tests: effect size, non-centrality parameter and example !!</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-39" style="background:;">
+  <hgroup>
+    <h2>dependence between groups</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+for dependent data, the correlation should be considered
+KURT: strange, why -.75 requires more observations than .5 ?
+-->
+
+<ul>
+<li>if 2 dependent groups (eg., before/after treatment) &rarr; account for correlations</li>
+<li>matched pairs (t-test / means, difference 2 dependent means)</li>
+<li>use <code>reference example</code>
+
+<ul>
+<li>[1] use correlation .5 to compare (effect size, ncp, n)</li>
+<li>[2] how many observations if no correlation exists (<code>reference example</code>) ?</li>
+<li>[3] difference in sample size for correlation .875 ?</li>
+<li>[4] set original sample size (n=64*2) and effect size (dz=.5), compare ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li>[1] \(\Delta\) looks same: \(\sqrt{2*(1-\rho)}\), n much smaller (1 group), ncp bit bigger</li>
+<li>[2] approx. independent means, here 65 (estimate the correlation)</li>
+<li>[3] effect size * 2 &rarr; sample size from 34 to 10</li>
+<li>[4] -posthoc- power &gt; .975: for 64 subjects 2 measurements, ncp &gt; 4 </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-40" style="background:;">
+  <hgroup>
+    <h2>non-parametric distribution</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+non-parametric distributions to avoid large sample approximations
+KURT: lagrange / logistic are less sample size
+KURT: why non-parametric - data or theory ?
+-->
+
+<ul>
+<li>expect non-normally distributed residuals, avoid normality assumption</li>
+<li>only considers ranks or uses permutations &rarr; price is efficiency</li>
+<li>avoid when possible, eg., transformations</li>
+<li>two groups &rarr; Wilcoxon-Mann-Whitney (t-test / means, diff. 2 indep. means)</li>
+<li>use <code>reference example</code>
+
+<ul>
+<li>[1] how about n ? compared to parametric &rarr; what is % loss efficiency ?</li>
+<li>[2] change parent distribution to &#39;min ARE&#39; ? what now ? </li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] a few more observations (3 more per group), less than 5 % loss</p></li>
+<li><p>[2] several more observations, less efficient, more than 13 % loss (min ARE)</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-41" style="background:;">
+  <hgroup>
+    <h2>relations instead of group differences</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+slope testing, is it 0 ?
+<br>for $\sigma_x$ = .5 (binary) and $\sigma_y$ = 4 &rarr; $\beta$ = .243*$\sqrt{17}$/$\sqrt{.25}$ = 2
+-->
+
+<ul>
+<li>differences between groups &rarr; relation observations &amp; categorization</li>
+<li>example &rarr; d = .5 &rarr; r = .243</li>
+<li>note: slope \(\beta = {r*\sigma_y} / {\sigma_x}\)</li>
+<li>regression coefficient (t-test / regression, one group size of slope)</li>
+<li>sample size for comparing the slope Ha with 0 (=Ho)
+
+<ul>
+<li>[1] determine slope (\(\beta\), with \(\sigma_y\) = 4.12 and \(\sigma_x\) = .5) </li>
+<li>[2] calculate sample size</li>
+<li>[3] what if \(\sigma_x\) (predictor values) or \(\sigma_y\) (effect and error) increase ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] for r = .243, \(\sigma_y\) = \(\sqrt{17}\) = 4.12, and \(\sigma_x\) = \(\sqrt{.25}\) = .5 (binary) &rarr; 2</p></li>
+<li><p>[2] 128, same as for reference example, now with effect size \(\beta\)</p></li>
+<li><p>[3] sample size decreases with \(\sigma_x\) (opposite \(\sigma_y\) ~ effect size), for same slope</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-42" style="background:;">
+  <hgroup>
+    <h2>relations: a variance perspective</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+slope testing, is it 0 ?
+-->
+
+<ul>
+<li>between and within group variance &rarr; relation observations &amp; categorization</li>
+<li>regression coefficient (t-test / regression, fixed model single regression coef)</li>
+<li>use <code>reference example</code>, regression style
+
+<ul>
+<li>variance within 4\(^2\) and between 1\(^2\), totaling \(\sigma_y^2\) = 17</li>
+<li>[1] calculate sample size, compare effect sizes ?</li>
+<li>[2] what if also other predictors in the model ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] 128, same as for reference example, now with f\(^2\) = .25\(^2\) = .0625.</p></li>
+<li><p>[2] loss of degree of freedom, very little impact</p></li>
+</ul>
+
+<ul>
+<li>note: <mini>\(f^2={R^2/{(1-R^2)}}\)</mini></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-43" style="background:;">
+  <hgroup>
+    <h2>more groups to compare, 4 cases</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+when comparing more than 2 groups, decisions are due
+KURT: alternatives to Bonferroni
+-->
+
+<ul>
+<li>simple example: assume one control, and two treatments</li>
+<li>if more than two groups, several options
+
+<ul>
+<li>test whether at least one differs 
+&rarr; omnibus F-test (variances)</li>
+<li>test whether all differ from eachother 
+&rarr; pairwise comparisons</li>
+<li>test whether selected pairs differ
+&rarr; contrast (t-test)</li>
+<li>test whether linear combinations of pairs differ &rarr; contrasts (t-tests)<br>
+eg., control versus each of the average of treatments</li>
+</ul></li>
+</ul>
+
+<p><br/></p>
+
+<ul>
+<li>if multiple tests &rarr; inflation of type I error (\(\alpha\))
+
+<ul>
+<li>correct \(\alpha\) or p-value, eg., using Bonferroni</li>
+<li>make more tentative inferences</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-44" style="background:;">
+  <hgroup>
+    <h2>F-test statistic</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:62%;'>
+  <ul>
+<li>multiple groups &rarr; not one effect size <code>d</code></li>
+<li>F-test statistic &amp; effect size <code>f</code></li>
+<li><code>f</code> is ratio of variances \(\sigma_{between}^2 / \sigma_{within}^2\)</li>
+<li>example: one control and two treatments 
+
+<ul>
+<li><code>reference example</code> + 1 group</li>
+<li>within group observations normally distributed</li>
+<li>means C=0, T1=2 and T2=4</li>
+<li>sd for all groups (C,T1,T2) = 4</li>
+</ul></li>
+</ul>
+
+</div>
+<div style='float:right;width:33%;'>
+  <p><img src="anova.png"></img></p>
+
+</div>
+<div style='float:left;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-45" style="background:;">
+  <hgroup>
+    <h2>more groups: omnibus</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+comparing all groups jointly, to see if at least one differs
+-->
+
+<ul>
+<li>for one control and two treatments &rarr; test that at least one differs</li>
+<li>one-way Anova (F-test / Means, ANOVA - fixed effects, omnibus, one way)</li>
+<li>effect size f, with numerator/denominator df (derived from \(\eta^2\))</li>
+<li>start from <code>reference example</code>,
+
+<ul>
+<li>[1] what is the sample size ? ncp ? critical F ? does size matter ?</li>
+<li>[2] set extra group, either mean 1 or 4, what are the effect / sample sizes ? <br>and with the mean of middle group away from global mean ?</li>
+<li>[4] derive effect size with <code>variance</code> between .5 and within 3, 1 and 6 ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] different effect size (f), distribution, same sample size 128 (size ~ imbalance)</p></li>
+<li><p>[2] n=237 or 63, with ncp 9.87 or 10.5, middle group obscures and vise verse<br>effect size increases, picks up difference 0 and 4!</p></li>
+<li><p>[3] same effect size, so, same sample size, 63, ncp 10.5 (1/7th explained)</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-46" style="background:;">
+  <hgroup>
+    <h2>more groups: pairwise</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+comparing all pairwise combinations
+-->
+
+<ul>
+<li>assume one control, and two treatments<br>
+
+<ul>
+<li>interested in all three pairwise comparisons &rarr; maybe Tukey
+
+<ul>
+<li>typically run aposteriori, after omnibus shows effect</li>
+</ul></li>
+<li>use t-test with correction of \(\alpha\) for multiple testing</li>
+</ul></li>
+<li>apply Bonferroni correction for original 3 group example
+
+<ul>
+<li>[1] resulting sample size for three tests ?</li>
+<li>[2] what if biggest difference is ignored, sample size ?</li>
+<li>[3] with original 64 sized groups, what is the power ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] divide \(\alpha\) by 3 (86*2) &rarr; overall 86*3 = 258</p></li>
+<li><p>[2] or divide by 2 (78*2) (biggest difference implied) &rarr; overall 78*3 = 234</p></li>
+<li><p>[3] .6562 when /3 or .7118 when /2, power-loss</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-47" style="background:;">
+  <hgroup>
+    <h2>sample size calculation benefit from focus</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+design is focus
+-->
+
+<ul>
+<li><p>better to focus during the design on specific questions</p>
+
+<ul>
+<li>only consider the main comparisons in focus (eg. primary endpoints)
+
+<ul>
+<li>only interested in comparing two treatments &rarr; t-test</li>
+</ul></li>
+<li>only consider smallest of relevant effects, largest sample size</li>
+<li>set up contrasts (next slide)</li>
+</ul></li>
+<li><p>sample size calculations (design)</p>
+
+<ul>
+<li>not necessarily equivalent to statistics</li>
+<li>requires justification to convince yourself and/or reviewers</li>
+</ul></li>
+<li><p>example: </p>
+
+<ul>
+<li>statistics: group difference evolution 4 repeated measurements &rarr; mixed model</li>
+<li>power: difference treatment and control last time point &rarr; t-test</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-48" style="background:;">
+  <hgroup>
+    <h2>more groups: contrasts</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+comparing specific contrasts
+-->
+
+<ul>
+<li>assume one control and two treatments
+
+<ul>
+<li>set up 2 contrasts for T1 - C and T2 - C</li>
+<li>set up 1 contrast for average(T1,T2) - C</li>
+</ul></li>
+<li>each contrast requires 1 degree of freedom</li>
+<li>each contrast combines a specific number of levels</li>
+<li>effect sizes for planned comparisons must be calculated !!
+
+<ul>
+<li>contrasts (linear combination)</li>
+<li>standard deviation of contrasts<br><br> \(\sigma_{contrast} = \frac{|\sum{\mu_i * c_i}|}{\sqrt{N \sum_i^k c_i^2 / n_i}}\) <br><mini>with group means \(\mu_i\), pre-specified coefficients \(c_i\), sample sizes \(n_i\) and total sample size \(N\)</mini></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-49" style="background:;">
+  <hgroup>
+    <h2>more groups: contrasts exercise</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+calculating the sample sizes
+-->
+
+<ul>
+<li>one-way ANOVA (F-test / Means, ANOVA-fixed effects,special,main,interaction)</li>
+<li>obtain effect sizes for contrasts (assume equally sized for convenience)
+
+<ul>
+<li>\(\sigma_{contrast}\) T1-C: \(\frac{(-1*0 + 1*2 + 0*4)}{\sqrt(2*((-1)^2+1^2+0^2))} = 1\); T2-C:\(~= 2\); (T1+T2)/2-C:\(~= 1.4142\)</li>
+<li>with \(\sigma\) = 4 &rarr; ratio of variances for effect sizes f .25, .5, .3536</li>
+</ul></li>
+<li>sample size for each contrast, each 1 df and 2 groups
+
+<ul>
+<li>[1] contrasts nrs. 1 or 2</li>
+<li>[2] contrasts nrs. 1 AND 2</li>
+<li>[3] contrasts nr. 3</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] total sample size 128 (again!!) as \(d=2f\), 64 C and 64 T1, or 34 = 17 C and 17 T2</p></li>
+<li><p>[2] same with Bonferroni correction &rarr; 155 and 41 &rarr; 78 C, 78 T1, 21 T2</p></li>
+<li><p>[3] total sample size 65 &rarr; 22 in each group</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-50" style="background:;">
+  <hgroup>
+    <h2>multiple factors</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>multiway ANOVA (F-test / Means, ANOVA-fixed effects,special,main,interaction)</li>
+<li>multiple main effects and interaction effects
+
+<ul>
+<li>interaction: group specific difference between groups
+
+<ul>
+<li>degrees of freedom (#A-1)*(#B-1)</li>
+</ul></li>
+<li>main effects: if no interaction (#X-1)</li>
+<li>get effect sizes for two way anova<br> <a href="https://icds.shinyapps.io/effectsizes/">https://icds.shinyapps.io/effectsizes/</a></li>
+</ul></li>
+<li>sample size for <code>reference example</code>, assume a second predictor is trivial
+
+<ul>
+<li>[1] what is partial \(\eta^2\) ?</li>
+<li>[2] sample size ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] .0588 (0-2, sd=4)</p></li>
+<li><p>[2] 128 again</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-51" style="background:;">
+  <hgroup>
+    <h2>dependence within groups (repeated)</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+repeated measures
+-->
+
+<ul>
+<li>if repeated measures &rarr; account for correlations</li>
+<li>repeated measures (F-test / Means, repeated measures...)</li>
+<li>3 main types
+
+<ul>
+<li>within: like dependent t-test for 2 or more measurements</li>
+<li>between: use of multiple measurements per group </li>
+<li>interaction: difference of change over groups</li>
+</ul></li>
+<li>correlation within subject (unit)
+
+<ul>
+<li>informative on group differences within subject</li>
+<li>redundancy for between group differences</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-52" style="background:;">
+  <hgroup>
+    <h2>repeated measures within</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+repeated measures within
+-->
+
+<ul>
+<li>possible to have only 1 group (within subject comparison) </li>
+<li>use effect size f = .25 (1/16 explained versus unexplained)
+
+<ul>
+<li>[1] use zero correlation to compare with sample size independent t-test</li>
+<li>[2] for one group use correlation .5, compare sample size dependent t-test</li>
+<li>[3] double number of groups to 2</li>
+<li>[4] double number of measurements to 4 (correlation 0 and .5), impact ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li>number of groups = 1, number of measurements = 2, sample size = [1] 65 and [2] 34</li>
+<li>[3] changed degrees of freedom, sample size could have changed (power, crit. F)</li>
+<li>[4] impact of more measurements bigger with higher correlation</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-53" style="background:;">
+  <hgroup>
+    <h2>repeated measures between</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+repeated measures between
+-->
+
+<ul>
+<li>use effect size f = .25 (1/16 for variance or 2/4 for means)
+
+<ul>
+<li>[1] use correlation 0 and .5 with 2 groups and 2 measurements, sample size ?</li>
+<li>[2] for correlation .5, compare 2 or 4 measurements, sample size ?</li>
+<li>[3] double number of groups to 2</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li>[1] sample size higher when higher correlation (66x2=132 for 0, 98x2=196 for .5)</li>
+<li>[2] sample size lower when more measurements, unless correlation is 1 (82x2=164)</li>
+<li>[3] more groups require higher sample size</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-54" style="background:;">
+  <hgroup>
+    <h2>repeated measures within x between</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+repeated measures between
+-->
+
+<ul>
+<li>SPSS idiosyncrasies: <a href="https://www.youtube.com/watch?v=CEQUNYg80Y0">https://www.youtube.com/watch?v=CEQUNYg80Y0</a></li>
+<li>use effect size f = .25 (1/16 for variance)
+
+<ul>
+<li>[1] use correlation 0, compare 2 groups 2 measurements with rep. between ?</li>
+<li>[2] use correlation 0.5, compare 2 groups 2 measurements with rep. within ?</li>
+<li>[3] use correlation .5, compare 2 groups and 4 measurements, sample size ?</li>
+<li>[4] repeat with 4 groups and 4 measurements, sample size ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li>[1] same with indep and [2] same with dependent</li>
+<li>[3] more groups, higher sample size (identical to within)</li>
+<li>[4] difference between within and between</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-55" style="background:;">
+  <hgroup>
+    <h2>correlations</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- 
+comparison of correlations
+-->
+
+<ul>
+<li>when comparing two independent correlations</li>
+<li>z-tests / correlation &amp; regressions: 2 indep. Pearson r&#39;s</li>
+<li>makes use of Fisher Z transformations &rarr; z = .5 * log(\(\frac{1+r}{1-r}\)) &rarr; q = z1-z2</li>
+<li>[1] assume correlation coefficients .7844 and .5 effect size &amp; sample size ?</li>
+<li>[2] assume .9844 and .7, effect size &amp; sample size ?</li>
+<li>[3] assume .1 and .3844 effect size &amp; sample size ?</li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] effect size q = 0.5074, sample size 64*2 = 128</p></li>
+<li><p>[2] effect size q = 1.5556, sample size 10*2 = 20, same difference, bigger effect</p></li>
+<li><p>[3] effect size q = -0.3048, sample size 172*2 = 344, negative and smaller effect</p></li>
+<li><p>note that dependent correlations are more difficult, see manual</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-56" style="background:;">
+  <hgroup>
+    <h2>proportions</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+when data are binary
+condition on marginals
+proportion of discordant and odds ratio
+-->
+
+<ul>
+<li>comparing two independent proportions &rarr; bounded between 0 and 1</li>
+<li>Fisher Exact Test (exact / proportions, difference 2 independent proportions)</li>
+<li>effect sizes in odds ratio, relative risk, difference proportion
+
+<ul>
+<li>[1] for odds ratio 2, p2 = .60, what is p1 ?</li>
+<li>[2] sample size for equal sized, and type I and II .05 and .2 ?</li>
+<li>[3] sample size when .95 and .8 (difference of .15) and .05 and .2 ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li>[1] odds ratio 2 * (.6/.4) = 3 (odds), 3/3+1 = .75</li>
+<li>[2] total sample size 328, [3] total sample size 164, either at .05 or .95</li>
+</ul>
+
+<ul>
+<li><p>treat as if unbounded, ok within .2 - .8, variance is p*(1-p) &rarr; maximally .25 !!</p>
+
+<ul>
+<li>[4] use t-test for difference of .15</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li>[4] effect size .3, sample size 352 (&gt; 328)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-57" style="background:;">
+  <hgroup>
+    <h2>proportions exercise</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+when data are binary
+condition on marginals
+proportion of discordant and odds ratio
+-->
+
+<div style='float:left;width:40%;'>
+  <p><img src="GPowerFisher.png"></img></p>
+
+</div>
+<div style='float:right;width:50%;'>
+  <ul>
+<li>Fisher Exact Test
+
+<ul>
+<li>power over proportions .5 to 1</li>
+<li>5 curves, sample sizes 328, 428, 528...</li>
+<li>type I error .05</li>
+<li>[1] what happens ?</li>
+<li>[2] repeat for one-tailed, what is different ?</li>
+</ul></li>
+</ul>
+
+</div>
+<div style='float:left;'>
+  <ul class = "build incremental">
+<li><p>[1] power for proportion compared to reference .6, sample size determines impact</p></li>
+<li><p>[2] one-tailed, increases power, both sides (absolute value difference) <br>tail to choose on the correct side</p></li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-58" style="background:;">
+  <hgroup>
+    <h2>dependent proportions</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+when data are binary
+condition on marginals
+proportion of discordant and odds ratio
+-->
+
+<ul>
+<li><p>when comparing two dependent proportions</p></li>
+<li><p>McNemar test (exact / proportions, difference 2 dependent proportions)</p>
+
+<ul>
+<li>include correlations implicitly, discordant pairs &rarr; change</li>
+<li>effect size as odds ratio &rarr; ratio of discordance ?! </li>
+</ul></li>
+<li><p>assume odds ratio equal to 2, equal sized, type I and II errors .05 and .2, two-way</p>
+
+<ul>
+<li>[1] what is the sample size for .25 proportion discordant, and [2] .5, and [3] 1</li>
+<li>[4] for odds ratio 4 or .25, how the proportion p12 and p21 change ?</li>
+<li>[5] repeat for third alpha option, and consider total sample size, what happens ?</li>
+</ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] total sample size 288 &amp; [2] 144 &amp; [3] impossible, but limits to 72</p></li>
+<li><p>[4] for proportion discordant, 1 to 4 or 4 to 1</p></li>
+<li><p>[5] sample size differs because side effects</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-59" style="background:;">
+  <hgroup>
+    <h2>conclusion: keep it simple, keep it real</h2>
+  </hgroup>
+  <article data-timings="">
+    <!--
+ending remarks
+-->
+
+<ul>
+<li>sample size calculation is a design issue, not a statistical one</li>
+<li>building blocks: sample &amp; effect sizes, type I &amp; II errors, each conditional on rest</li>
+<li>effect sizes express the amount of signal compared to the background noise</li>
+<li>complex models imply complex sample size calculations, if at all possible</li>
+<li>GPower deals with not too complex models
+
+<ul>
+<li>simplify using a focus, if justifiable &rarr; then GPower can get you a long way</li>
+<li>use more complex specification for more complex sample size calculations</li>
+<li>leave GPower, simulation is always an option</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-60" style="background:;">
+  <article data-timings="">
+    <p><img src="assets/img/logo_icds.png" width=150></img><br/>about us ... </p>
+
+<ul>
+<li>statistical consultancy at VUB / UZ
+
+<ul>
+<li>for PhD students and researchers</li>
+<li>for master students&#39; thesis</li>
+</ul></li>
+<li><p>collaboration on data analysis</p></li>
+<li><p>webiste @ <a href="http://www.icds.be">www.icds.be</a></p></li>
+<li><p>book us @ <a href="https://gf.vub.ac.be/stats.php">https://gf.vub.ac.be/stats.php</a> </p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='NA'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='sample size calculation: a design issue'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='simple example'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='overview'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='PART I: building blocks in action for t-test'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='reference example'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='a formula you could use'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='GPower: a useful tool'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='GPower: the building blocks in action'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='GPower input'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='GPower output'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='reference example protocol'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='NA'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='GPower distributions'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Ho and Ha distributions'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='non-centrality: Ho &rarr; Ha'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='divide by n perspective on distributions'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='no Ha for estimation'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='type I/II error probability'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='error exercise : create plot'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='error exercise : interpret plot'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='decide type I/II error probability'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='interim analyses: control type I error'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='for fun: P(effect exists | test says so)'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='effect sizes'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='effect sizes of Cohen'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='effect sizes of d and r family'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='effect sizes in GPower (Determine)'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='effect size exercise : ingredients cohen d'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='effect size exercise : plot'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='effect size exercise : imbalance'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='effect sizes, how to determine them in theory'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='effect sizes, how to determine them in practice'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='relation samples &amp; effect size, errors I &amp; II'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='NA'>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='getting your hands dirty'>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title='PART II: moving beyong independent t-test'>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title='GPower examples beyond the independent t-test'>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title='dependence between groups'>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title='non-parametric distribution'>
+         40
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=41 title='relations instead of group differences'>
+         41
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=42 title='relations: a variance perspective'>
+         42
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=43 title='more groups to compare, 4 cases'>
+         43
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=44 title='F-test statistic'>
+         44
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=45 title='more groups: omnibus'>
+         45
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=46 title='more groups: pairwise'>
+         46
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=47 title='sample size calculation benefit from focus'>
+         47
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=48 title='more groups: contrasts'>
+         48
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=49 title='more groups: contrasts exercise'>
+         49
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=50 title='multiple factors'>
+         50
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=51 title='dependence within groups (repeated)'>
+         51
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=52 title='repeated measures within'>
+         52
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=53 title='repeated measures between'>
+         53
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=54 title='repeated measures within x between'>
+         54
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=55 title='correlations'>
+         55
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=56 title='proportions'>
+         56
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=57 title='proportions exercise'>
+         57
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=58 title='dependent proportions'>
+         58
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=59 title='conclusion: keep it simple, keep it real'>
+         59
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=60 title='NA'>
+         60
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
