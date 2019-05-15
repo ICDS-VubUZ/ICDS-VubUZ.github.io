@@ -62,7 +62,7 @@ mini {
 <!-- 
 library(slidify)
 setwd("C:\\Users\\wcools\\Documents\\workshops\\sample size GPower")
-slidify("sample Size GPower 19x.Rmd")
+slidify("sample Size GPower 19.Rmd")
 -->
 
 <h2>sample size calculation: why &amp; how</h2>
@@ -1352,6 +1352,12 @@ playing around with parameters
 </ul></li>
 </ul>
 
+<ul class = "build incremental">
+<li><p>[1] .5 to .7115 = .2115, bigger effect size compensate for loss of sample size (sensitivity)</p></li>
+<li><p>[2] critical value 1.9990 with errors approx. .05 and .2 (compromise)</p></li>
+<li><p>[3] critical value 1.6994 with errors approx. double, .09 and .38</p></li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -1477,6 +1483,13 @@ KURT: strange, why -.75 requires more observations than .5 ?
 </ul></li>
 </ul>
 
+<ul class = "build incremental">
+<li>[1] \(\Delta\) looks same: \(\sqrt{2*(1-\rho)}\), n much smaller (1 group), ncp bit bigger</li>
+<li>[2] approx. independent means, here 65 (estimate the correlation)</li>
+<li>[3] effect size * 2 &rarr; sample size from 34 to 10</li>
+<li>[4] -posthoc- power &gt; .975: for 64 subjects 2 measurements, ncp &gt; 4 </li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -1503,6 +1516,11 @@ KURT: why non-parametric - data or theory ?
 <li>[1] how about n ? compared to parametric &rarr; what is % loss efficiency ?</li>
 <li>[2] change parent distribution to &#39;min ARE&#39; ? what now ? </li>
 </ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] a few more observations (3 more per group), less than 5 % loss</p></li>
+<li><p>[2] several more observations, less efficient, more than 13 % loss (min ARE)</p></li>
 </ul>
 
   </article>
@@ -1533,6 +1551,12 @@ slope testing, is it 0 ?
 </ul></li>
 </ul>
 
+<ul class = "build incremental">
+<li><p>[1] for r = .243, \(\sigma_y\) = \(\sqrt{17}\) = 4.12, and \(\sigma_x\) = \(\sqrt{.25}\) = .5 (binary) &rarr; 2</p></li>
+<li><p>[2] 128, same as for reference example, now with effect size \(\beta\)</p></li>
+<li><p>[3] sample size decreases with \(\sigma_x\) (opposite \(\sigma_y\) ~ effect size), for same slope</p></li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -1549,14 +1573,22 @@ slope testing, is it 0 ?
 <ul>
 <li>between and within group variance &rarr; relation observations &amp; categorization</li>
 <li>regression coefficient (t-test / regression, fixed model single regression coef)</li>
-<li><p>use <code>reference example</code>, regression style</p>
+<li>use <code>reference example</code>, regression style
 
 <ul>
 <li>variance within 4\(^2\) and between 1\(^2\), totaling \(\sigma_y^2\) = 17</li>
 <li>[1] calculate sample size, compare effect sizes ?</li>
 <li>[2] what if also other predictors in the model ?</li>
 </ul></li>
-<li><p>note: <mini>\(f^2={R^2/{(1-R^2)}}\)</mini></p></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] 128, same as for reference example, now with f\(^2\) = .25\(^2\) = .0625.</p></li>
+<li><p>[2] loss of degree of freedom, very little impact</p></li>
+</ul>
+
+<ul>
+<li>note: <mini>\(f^2={R^2/{(1-R^2)}}\)</mini></li>
 </ul>
 
   </article>
@@ -1659,6 +1691,12 @@ comparing all groups jointly, to see if at least one differs
 </ul></li>
 </ul>
 
+<ul class = "build incremental">
+<li><p>[1] different effect size (f), distribution, same sample size 128 (size ~ imbalance)</p></li>
+<li><p>[2] n=237 or 63, with ncp 9.87 or 10.5, middle group obscures and vise verse<br>effect size increases, picks up difference 0 and 4!</p></li>
+<li><p>[3] same effect size, so, same sample size, 63, ncp 10.5 (1/7th explained)</p></li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -1690,6 +1728,12 @@ comparing all pairwise combinations
 <li>[2] what if biggest difference is ignored, sample size ?</li>
 <li>[3] with original 64 sized groups, what is the power ?</li>
 </ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] divide \(\alpha\) by 3 (86*2) &rarr; overall 86*3 = 258</p></li>
+<li><p>[2] or divide by 2 (78*2) (biggest difference implied) &rarr; overall 78*3 = 234</p></li>
+<li><p>[3] .6562 when /3 or .7118 when /2, power-loss</p></li>
 </ul>
 
   </article>
@@ -1791,6 +1835,12 @@ calculating the sample sizes
 </ul></li>
 </ul>
 
+<ul class = "build incremental">
+<li><p>[1] total sample size 128 (again!!) as \(d=2f\), 64 C and 64 T1, or 34 = 17 C and 17 T2</p></li>
+<li><p>[2] same with Bonferroni correction &rarr; 155 and 41 &rarr; 78 C, 78 T1, 21 T2</p></li>
+<li><p>[3] total sample size 65 &rarr; 22 in each group</p></li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -1819,6 +1869,11 @@ calculating the sample sizes
 <li>[1] what is partial \(\eta^2\) ?</li>
 <li>[2] sample size ?</li>
 </ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] .0588 (0-2, sd=4)</p></li>
+<li><p>[2] 128 again</p></li>
 </ul>
 
   </article>
@@ -1877,6 +1932,12 @@ repeated measures within
 </ul></li>
 </ul>
 
+<ul class = "build incremental">
+<li>number of groups = 1, number of measurements = 2, sample size = [1] 65 and [2] 34</li>
+<li>[3] changed degrees of freedom, sample size could have changed (power, crit. F)</li>
+<li>[4] impact of more measurements bigger with higher correlation</li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -1898,6 +1959,12 @@ repeated measures between
 <li>[2] for correlation .5, compare 2 or 4 measurements, sample size ?</li>
 <li>[3] double number of groups to 2</li>
 </ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li>[1] sample size higher when higher correlation (66x2=132 for 0, 98x2=196 for .5)</li>
+<li>[2] sample size lower when more measurements, unless correlation is 1 (82x2=164)</li>
+<li>[3] more groups require higher sample size</li>
 </ul>
 
   </article>
@@ -1925,6 +1992,12 @@ repeated measures between
 </ul></li>
 </ul>
 
+<ul class = "build incremental">
+<li>[1] same with indep and [2] same with dependent</li>
+<li>[3] more groups, higher sample size (identical to within)</li>
+<li>[4] difference between within and between</li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -1947,6 +2020,13 @@ comparison of correlations
 <li>[3] assume .1 and .3844 effect size &amp; sample size ?</li>
 </ul>
 
+<ul class = "build incremental">
+<li><p>[1] effect size q = 0.5074, sample size 64*2 = 128</p></li>
+<li><p>[2] effect size q = 1.5556, sample size 10*2 = 20, same difference, bigger effect</p></li>
+<li><p>[3] effect size q = -0.3048, sample size 172*2 = 344, negative and smaller effect</p></li>
+<li><p>note that dependent correlations are more difficult, see manual</p></li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -1965,18 +2045,30 @@ proportion of discordant and odds ratio
 <ul>
 <li>comparing two independent proportions &rarr; bounded between 0 and 1</li>
 <li>Fisher Exact Test (exact / proportions, difference 2 independent proportions)</li>
-<li><p>effect sizes in odds ratio, relative risk, difference proportion</p>
+<li>effect sizes in odds ratio, relative risk, difference proportion
 
 <ul>
 <li>[1] for odds ratio 2, p2 = .60, what is p1 ?</li>
 <li>[2] sample size for equal sized, and type I and II .05 and .2 ?</li>
 <li>[3] sample size when .95 and .8 (difference of .15) and .05 and .2 ?</li>
 </ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li>[1] odds ratio 2 * (.6/.4) = 3 (odds), 3/3+1 = .75</li>
+<li>[2] total sample size 328, [3] total sample size 164, either at .05 or .95</li>
+</ul>
+
+<ul>
 <li><p>treat as if unbounded, ok within .2 - .8, variance is p*(1-p) &rarr; maximally .25 !!</p>
 
 <ul>
 <li>[4] use t-test for difference of .15</li>
 </ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li>[4] effect size .3, sample size 352 (&gt; 328)</li>
 </ul>
 
   </article>
@@ -2013,7 +2105,11 @@ proportion of discordant and odds ratio
 
 </div>
 <div style='float:left;'>
-  
+  <ul class = "build incremental">
+<li><p>[1] power for proportion compared to reference .6, sample size determines impact</p></li>
+<li><p>[2] one-tailed, increases power, both sides (absolute value difference) <br>tail to choose on the correct side</p></li>
+</ul>
+
 </div>
   </article>
   <!-- Presenter Notes -->
@@ -2045,6 +2141,12 @@ proportion of discordant and odds ratio
 <li>[4] for odds ratio 4 or .25, how the proportion p12 and p21 change ?</li>
 <li>[5] repeat for third alpha option, and consider total sample size, what happens ?</li>
 </ul></li>
+</ul>
+
+<ul class = "build incremental">
+<li><p>[1] total sample size 288 &amp; [2] 144 &amp; [3] impossible, but limits to 72</p></li>
+<li><p>[4] for proportion discordant, 1 to 4 or 4 to 1</p></li>
+<li><p>[5] sample size differs because side effects</p></li>
 </ul>
 
   </article>
